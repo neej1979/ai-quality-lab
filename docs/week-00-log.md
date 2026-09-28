@@ -5,9 +5,7 @@ provided setup, two were tool/model behavior. All five are worth keeping.
 
 ## 1. Inline prompt read as a file path
 - **Symptom:** Error: There are no prompts in "Answer in one short sentence. {{question}} /no_think"
-    at readPrompts (file:///Users/neilduggan/repos/personal/ai-quality-lab/node_modules/promptfoo/dist/src/graders-CrOgZSVq.js:1783:39)
-    at async resolveConfigs (file:///Users/neilduggan/repos/personal/ai-quality-lab/node_modules/promptfoo/dist/src/main.js:2654:22)
-- **Root cause:** Promptfoo interprets strings containing / as file paths regardless of where they are in the sentence
+- **Root cause:** in my run, a / anywhere in the string triggered file-path handling
 - **Fix:** Put the prompt in its own file and reference it with file://
 - **Lesson:** Know how your tool parses input before trusting it. And my first fix (moving the / to the end) failed because I acted on a diagnosis I hadn't verified.
 
