@@ -35,3 +35,5 @@ provided setup, two were tool/model behavior. All five are worth keeping.
 - **Root cause:** The example .env file had an empty key followed by another line which gitleaks read as one 'secret'
 - **Fix:** Reordered the .env example file so that the empty key lines are last, which removed the pattern that gitleaks saw.
 - **Lesson:** Fixed without an allowlist so the guard wasn't weakened repo-wide. The fix depends on file layout, but it fails safe: a future edit could cause another false block, never a leak.
+
+**Feedback to act on:** Replace the denylist guard with a positive assertion on answer shape (carried to Week 3).
