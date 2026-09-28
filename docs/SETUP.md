@@ -19,25 +19,32 @@ If anything fails, the script tells you what and stops. Fix that one thing, re-r
 
 ## 2. Prove the secret guard works (5 minutes)
 
-Do this once so you trust it:
+Do this once so you trust it. The token is random and fake, but shaped like a real GitHub personal access token, so gitleaks should block it:
 
 ```bash
-echo 'aws_secret_access_key = "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"' > leak-test.txt
+printf 'token = "ghp_%s"\n' "$(LC_ALL=C tr -dc 'A-Za-z0-9' < /dev/urandom | head -c 36)" > leak-test.txt
 git add leak-test.txt
-git commit -m "should be blocked"     # gitleaks should refuse
-git restore --staged leak-test.txt && rm leak-test.txt
+git commit -m "should be blocked"
 ```
+
+**Done when:** you see `RuleID: github-pat` and `leaks found: 1`, and no commit is created. Then clean up:
+
+```bash
+git rm --cached -q leak-test.txt && rm leak-test.txt
+```
+
+Don't use AWS's documentation example key (`...EXAMPLEKEY`) for this. Gitleaks deliberately ignores it, so the commit goes through and the test proves nothing. See `docs/week-00-log.md`, failure #4.
 
 ## 3. Publish the repo (Saturday)
 
 1. Create a **public** GitHub repo called `ai-quality-lab`
 2. Then:
-   ```bash
+```bash
    git add -A
    git commit -m "Week 0: environment and plan"
    git remote add origin git@github.com:<you>/ai-quality-lab.git
    git push -u origin main
-   ```
+```
 
 ## 4. API accounts and spend caps (any time before Week 3)
 
