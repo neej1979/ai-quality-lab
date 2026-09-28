@@ -1,0 +1,16 @@
+{
+  "name": "ai-quality-lab",
+  "version": "0.1.0",
+  "private": true,
+  "description": "A 10-week hands-on study of evaluating, red-teaming and governing AI features.",
+  "scripts": {
+    "smoke": "promptfoo eval -c evals/00-smoke/promptfooconfig.yaml",
+    "view": "promptfoo view"
+  },
+  "devDependencies": {
+    "promptfoo": "latest"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

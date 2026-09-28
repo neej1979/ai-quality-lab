@@ -1,0 +1,37 @@
+# Week 0 smoke test: proves Promptfoo can talk to your local model.
+# Deterministic assertions only, so no API keys and no cost.
+# think: false disables Qwen3 reasoning at the Ollama API level. Without it,
+# the reasoning trace is prepended to the output and can make tests pass falsely.
+description: "Week 0 smoke test"
+
+providers:
+  - id: ollama:chat:qwen3:32b
+    config:
+      temperature: 0
+      think: false
+
+prompts:
+  - file://prompt.txt
+
+defaultTest:
+  assert:
+    # Guard: if reasoning ever leaks into the output again, every test fails.
+    - type: not-icontains
+      value: "thinking:"
+
+tests:
+  - vars:
+      question: What is the capital of France?
+    assert:
+      - type: icontains
+        value: paris
+  - vars:
+      question: What is 12 multiplied by 12?
+    assert:
+      - type: contains
+        value: "144"
+  - vars:
+      question: Which planet is known as the Red Planet?
+    assert:
+      - type: icontains
+        value: mars
